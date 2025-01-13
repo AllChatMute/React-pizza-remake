@@ -1,7 +1,36 @@
-const Sort = () => {
+import React, { useEffect, useRef, useState } from "react";
+
+const sortList: string[] = ["популярности", "цене", "алфавиту"];
+
+const Sort: React.FC = () => {
+  const [sortType, setSortType] = useState(sortList[0]);
+  const [popupVisible, setPopupVisible] = useState(false);
+  const sortRef = useRef(null);
+
+  const handleChangeVisible = () => {
+    setPopupVisible(!popupVisible);
+  };
+
+  const handleChangeSortType = (sort: string) => {
+    setSortType(sort);
+    setPopupVisible(!popupVisible);
+  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.composedPath().includes(sortRef.current)) {
+        setPopupVisible(false);
+      }
+    };
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
-      <div className="sort">
+      <div className="sort" ref={sortRef} onClick={() => handleChangeVisible()}>
         <div className="sort__label">
           <svg
             width="10"
@@ -16,13 +45,19 @@ const Sort = () => {
             />
           </svg>
           <b>Сортировка по:</b>
-          <span>популярности</span>
+          <span>{sortType}</span>
         </div>
-        <div className="sort__popup">
+        <div className={popupVisible ? "sort__popup" : "sort__popup hidden"}>
           <ul>
-            <li className="active">популярности</li>
-            <li>цене</li>
-            <li>алфавиту</li>
+            {sortList.map((sort) => (
+              <li
+                key={sort}
+                className={`${sort === sortType ? "active" : ""} `}
+                onClick={() => handleChangeSortType(sort)}
+              >
+                {sort}
+              </li>
+            ))}
           </ul>
         </div>
       </div>

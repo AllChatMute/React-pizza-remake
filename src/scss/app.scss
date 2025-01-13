@@ -8,6 +8,10 @@ body {
   background-color: $background;
 }
 
+.hidden{
+  display:none
+}
+
 .wrapper {
   width: calc(100vw - 100px);
   height: 100%;

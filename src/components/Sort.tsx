@@ -5,7 +5,7 @@ const sortList: string[] = ["популярности", "цене", "алфав�
 const Sort: React.FC = () => {
   const [sortType, setSortType] = useState(sortList[0]);
   const [popupVisible, setPopupVisible] = useState(false);
-  const sortRef = useRef(null);
+  const sortRef = useRef<HTMLDivElement | null>(null);
 
   const handleChangeVisible = () => {
     setPopupVisible(!popupVisible);
@@ -19,6 +19,7 @@ const Sort: React.FC = () => {
     const handleClickOutside = (event) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setPopupVisible(false);
+        console.log(event.composedPath());
       }
     };
     document.body.addEventListener("click", handleClickOutside);

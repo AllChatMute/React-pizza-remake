@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { setCurrentCategorie } from "../redux/slices/filterSlice";
 
 const categoriesList: string[] = [
   "Все",
@@ -10,7 +12,10 @@ const categoriesList: string[] = [
 ];
 
 const Categories: React.FC = () => {
-  const [currentCategorie, setCurrentCategorie] = useState<number>(0);
+  const dispatch = useAppDispatch();
+  const currentCategorie = useAppSelector(
+    (state) => state.filter.currentCategorie
+  );
 
   return (
     <>
@@ -20,7 +25,7 @@ const Categories: React.FC = () => {
             <li
               key={categorie}
               className={currentCategorie === index ? "active" : ""}
-              onClick={() => setCurrentCategorie(index)}
+              onClick={() => dispatch(setCurrentCategorie(index))}
             >
               {categorie}
             </li>

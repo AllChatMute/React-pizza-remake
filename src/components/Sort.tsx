@@ -33,7 +33,6 @@ const Sort: React.FC = () => {
     const handleClickOutside = (event) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setPopupVisible(false);
-        console.log(event.composedPath());
       }
     };
     document.body.addEventListener("click", handleClickOutside);

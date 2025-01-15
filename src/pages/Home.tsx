@@ -15,7 +15,6 @@ const Home: React.FC = () => {
     (state) => state.filter
   );
   const searchValue = useAppSelector((state) => state.search.value);
-  console.log(searchValue);
 
   const fetchPizzas = async () => {
     try {

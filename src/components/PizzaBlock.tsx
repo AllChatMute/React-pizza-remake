@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PizzaBlockType from "../types/PizzaBlockInterface";
+import Rating from "./Rating";
 
 const typeList: { id: number; name: string }[] = [
   { id: 0, name: "тонкое" },
@@ -12,9 +13,11 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({
   price,
   types,
   sizes,
+  rating,
 }) => {
   const [pizzaType, setPizzaType] = useState(0);
   const [pizzaSize, setPizzaSize] = useState(sizes[0]);
+  console.log(rating);
 
   return (
     <>
@@ -46,6 +49,7 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({
               ))}
             </ul>
           </div>
+          <Rating rating={rating} />
           <div className="pizza-block__bottom">
             <div className="pizza-block__price">{price} ₽</div>
             <div className="button button--outline button--add">

@@ -14,27 +14,31 @@ const Home: React.FC = () => {
   const { currentCategorie, currentSort } = useAppSelector(
     (state) => state.filter
   );
+  const searchValue = useAppSelector((state) => state.search.value);
+  console.log(searchValue);
 
   const fetchPizzas = async () => {
     try {
       const category =
         currentCategorie > 0 ? `category=${currentCategorie}&` : "";
+      const search = searchValue !== "" ? `&search=${searchValue}` : "";
 
       const response = await axios.get(
-        `https://66cf3d37901aab24842179de.mockapi.io/Items?${category}sortBy=${currentSort}`
+        `https://66cf3d37901aab24842179de.mockapi.io/Items?${category}sortBy=${currentSort}${search}`
       );
-      if (response.status !== 200) throw new Error();
+      // if (response.status !== 200) throw new Error();
 
       setItems(response.data);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setItems([]);
     }
   };
   useEffect(() => {
     fetchPizzas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentCategorie, currentSort]);
+  }, [currentCategorie, currentSort, searchValue]);
 
   const pizzas = items.map((item: PizzaBlockType) => (
     <PizzaBlock key={item.id} {...item} />

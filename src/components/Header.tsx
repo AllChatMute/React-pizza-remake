@@ -1,5 +1,6 @@
 import * as React from "react";
 import Logo from "../assets/img/pizza-logo.svg";
+import Search from "./Search/Search";
 
 const Header: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const Header: React.FC = () => {
               <p>самая вкусная пицца во вселенной</p>
             </div>
           </div>
+          <Search />
           <div className="header__cart">
             <a href="/cart.html" className="button button--cart">
               <span>520 ₽</span>

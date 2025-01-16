@@ -11,7 +11,7 @@ import { useAppSelector } from "../redux/hooks";
 const Home: React.FC = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { currentCategorie, currentSort } = useAppSelector(
+  const { currentCategorie, currentSort, currentOrder } = useAppSelector(
     (state) => state.filter
   );
   const searchValue = useAppSelector((state) => state.search.value);
@@ -23,7 +23,7 @@ const Home: React.FC = () => {
       const search = searchValue !== "" ? `&search=${searchValue}` : "";
 
       const response = await axios.get(
-        `https://66cf3d37901aab24842179de.mockapi.io/Items?${category}sortBy=${currentSort}${search}`
+        `https://66cf3d37901aab24842179de.mockapi.io/Items?${category}sortBy=${currentSort}&order=${currentOrder}${search}`
       );
       // if (response.status !== 200) throw new Error();
 
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetchPizzas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentCategorie, currentSort, searchValue]);
+  }, [currentCategorie, currentSort, currentOrder, searchValue]);
 
   const pizzas = items.map((item: PizzaBlockType) => (
     <PizzaBlock key={item.id} {...item} />

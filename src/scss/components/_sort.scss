@@ -1,25 +1,41 @@
 @import '../variables';
 
 .sort {
+  user-select: none;
   position: relative;
-  width: 251px;
+  min-width: 255px;
   &__label {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    gap: 7px;
+    width: 270px;
 
-    svg {
+    &-sort{
+      width: 100%;
+    }
+
+    &-order{
+      width: 100%;
+    }
+
+    div{
+      svg {
       margin-right: 8px;
-    }
+      }
 
-    b {
-      margin-right: 8px;
-    }
+      b {
+        margin-right: 8px;
+      }
 
-    span {
-      color: $orange;
-      border-bottom: 1px dashed $orange;
-      cursor: pointer;
+      span {
+        color: $orange;
+        border-bottom: 1px dashed $orange;
+       cursor: pointer;
+      }
     }
+    
+
   }
 
   &__popup {
@@ -32,6 +48,10 @@
     overflow: hidden;
     padding: 10px 0;
     width: 160px;
+
+    &-order{
+      margin-top: 50px;
+    }
 
     ul {
       overflow: hidden;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { setCurrentOrder } from "../redux/slices/filterSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
@@ -7,7 +7,7 @@ const orderTypes: { name: string; type: string }[] = [
   { name: "убывание ↓", type: "desc" },
 ];
 
-const Order = () => {
+const Order: React.FC = () => {
   const [popupVisible, setPopupVisible] = useState(false);
   const orderRef = useRef<HTMLDivElement | null>(null);
   const currentOrder = useAppSelector((state) => state.filter.currentOrder);

@@ -17,7 +17,6 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({
 }) => {
   const [pizzaType, setPizzaType] = useState(0);
   const [pizzaSize, setPizzaSize] = useState(sizes[0]);
-  console.log(rating);
 
   return (
     <>

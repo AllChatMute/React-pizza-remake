@@ -25,7 +25,7 @@ const Home: React.FC = () => {
       const response = await axios.get(
         `https://66cf3d37901aab24842179de.mockapi.io/Items?${category}sortBy=${currentSort}&order=${currentOrder}${search}`
       );
-      // if (response.status !== 200) throw new Error();
+      if (response.status !== 200) throw new Error();
 
       setItems(response.data);
       setIsLoading(false);

@@ -19,6 +19,7 @@ const Search: React.FC = () => {
 
   const handleClear = () => {
     dispatch(setValue(""));
+    setInputValue("");
     inputRef.current?.focus();
   };
 

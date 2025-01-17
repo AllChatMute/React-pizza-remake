@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import PizzaBlockType from "../types/PizzaBlockInterface";
 import Rating from "./Rating";
+import { handleAddCartItem } from "../redux/slices/cartSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import cartPizzaType from "../types/cartPizzaInterface";
 
 const typeList: { id: number; name: string }[] = [
   { id: 0, name: "тонкое" },
@@ -14,9 +17,24 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({
   types,
   sizes,
   rating,
+  id,
 }) => {
+  const dispatch = useAppDispatch();
   const [pizzaType, setPizzaType] = useState(0);
   const [pizzaSize, setPizzaSize] = useState(sizes[0]);
+  const count = useAppSelector((state) => state.cart.cartItems).find(
+    (item) => item.id === id
+  )?.count;
+
+  const pizzaToCart: cartPizzaType = {
+    id,
+    title,
+    price,
+    count: 1,
+    imageUrl,
+    type: pizzaType,
+    size: pizzaSize,
+  };
 
   return (
     <>
@@ -51,7 +69,10 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({
           <Rating rating={rating} />
           <div className="pizza-block__bottom">
             <div className="pizza-block__price">{price} ₽</div>
-            <div className="button button--outline button--add">
+            <div
+              className="button button--outline button--add"
+              onClick={() => dispatch(handleAddCartItem(pizzaToCart))}
+            >
               <svg
                 width="12"
                 height="12"
@@ -65,7 +86,7 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({
                 />
               </svg>
               <span>Добавить</span>
-              <i>2</i>
+              <i>{count ? count : "0"}</i>
             </div>
           </div>
         </div>

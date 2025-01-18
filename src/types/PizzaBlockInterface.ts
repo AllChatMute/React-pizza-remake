@@ -7,6 +7,7 @@ interface PizzaBlockType {
   sizes: number[];
   title: string;
   types: number[];
+  description: string;
 }
 
 export default PizzaBlockType;

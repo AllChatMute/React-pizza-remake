@@ -4,6 +4,7 @@ import Rating from "./Rating";
 import { handleAddCartItem } from "../redux/slices/cartSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import cartPizzaType from "../types/cartPizzaInterface";
+import { useNavigate } from "react-router";
 
 const typeList: { id: number; name: string }[] = [
   { id: 0, name: "тонкое" },
@@ -22,6 +23,7 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({
   const dispatch = useAppDispatch();
   const [pizzaType, setPizzaType] = useState(0);
   const [pizzaSize, setPizzaSize] = useState(sizes[0]);
+  const navigate = useNavigate();
   const count = useAppSelector((state) => state.cart.cartItems).find(
     (item) => item.id === id
   )?.count;
@@ -36,12 +38,19 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({
     size: pizzaSize,
   };
 
+  const handleOpenFullPizza = () => {
+    navigate(`/pizza/${id}`);
+  };
+
   return (
     <>
       <div className="pizza-block__wrapper">
         <div className="pizza-block">
-          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-          <h4 className="pizza-block__title">{title}</h4>
+          <div className="pizza-block__nav-link" onClick={handleOpenFullPizza}>
+            <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+            <h4 className="pizza-block__title">{title}</h4>
+          </div>
+
           <div className="pizza-block__selector">
             <ul>
               {types.map((type) => (

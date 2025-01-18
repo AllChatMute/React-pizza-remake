@@ -62,12 +62,6 @@ const cartSlice = createSlice({
       state.totalCount = 0;
       state.totalPrice = 0;
     },
-    // calculateTotalCount: (state, action: PayloadAction<number>) => {
-    //   state.totalCount = state.cartItems.reduce(
-    //     (total, action) => total + action.payload.count,
-    //     0
-    //   );
-    // },
   },
 });
 

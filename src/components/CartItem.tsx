@@ -79,7 +79,7 @@ const CartItem: React.FC<cartPizzaType> = ({
           </div>
         </div>
         <div className="cart__item-price">
-          <b>{price} ₽</b>
+          <b>{price * count} ₽</b>
         </div>
         <div className="cart__item-remove">
           <div

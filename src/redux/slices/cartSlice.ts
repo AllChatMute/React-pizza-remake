@@ -3,14 +3,10 @@ import cartPizzaType from "../../types/cartPizzaInterface";
 
 interface initialState {
   cartItems: cartPizzaType[];
-  totalPrice: number;
-  totalCount: number;
 }
 
 const initialState: initialState = {
-  cartItems: [],
-  totalPrice: 0,
-  totalCount: 0,
+  cartItems: JSON.parse(localStorage.getItem("cart") ?? "[]"),
 };
 
 const cartSlice = createSlice({
@@ -24,8 +20,10 @@ const cartSlice = createSlice({
 
       if (foundedPizza) {
         foundedPizza.count++;
+        localStorage.setItem("cart", JSON.stringify(state.cartItems));
       } else {
         state.cartItems.push(action.payload);
+        localStorage.setItem("cart", JSON.stringify(state.cartItems));
       }
     },
     handleDeleteCartItem: (state, action: PayloadAction<string>) => {
@@ -36,12 +34,15 @@ const cartSlice = createSlice({
       state.cartItems = state.cartItems.filter(
         (item) => item.id !== foundedPizza?.id
       );
+
+      localStorage.setItem("cart", JSON.stringify(state.cartItems));
     },
-    handleIncreaseItemCount: (state, action) => {
+    handleIncreaseItemCount: (state, action: PayloadAction<string>) => {
       const foundedPizza = state.cartItems.find(
         (item) => item.id === action.payload
       );
       if (foundedPizza) foundedPizza.count++;
+      localStorage.setItem("cart", JSON.stringify(state.cartItems));
     },
     handleDecreaseItemCount: (state, action: PayloadAction<string>) => {
       const foundedPizza = state.cartItems.find(
@@ -50,17 +51,18 @@ const cartSlice = createSlice({
 
       if (foundedPizza && foundedPizza.count > 1) {
         foundedPizza.count--;
+        localStorage.setItem("cart", JSON.stringify(state.cartItems));
       } else if (foundedPizza && foundedPizza.count <= 1) {
         state.cartItems = state.cartItems.filter(
           (item) => item.id !== foundedPizza.id
         );
+        localStorage.setItem("cart", JSON.stringify(state.cartItems));
       }
     },
     handleClearCart: (state) => {
       state.cartItems.forEach((item) => (item.count = 0));
       state.cartItems = [];
-      state.totalCount = 0;
-      state.totalPrice = 0;
+      localStorage.setItem("cart", "[]");
     },
   },
 });

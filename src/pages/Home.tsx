@@ -1,38 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/Skeleton";
 
-import axios from "axios";
 import PizzaBlockType from "../types/PizzaBlockInterface";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import Paginate from "../components/Paginate/Paginate";
+import { setItems, fetchPizza } from "../redux/slices/pizzaSlice";
 
 const Home: React.FC = () => {
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const { currentCategorie, currentSort, currentOrder } = useAppSelector(
     (state) => state.filter
   );
+  const dispatch = useAppDispatch();
   const searchValue = useAppSelector((state) => state.search.value);
   const currentPage = useAppSelector((state) => state.paginate.currentPage);
+  const { items, status } = useAppSelector((state) => state.pizza);
 
   const fetchPizzas = async () => {
     try {
-      const category =
-        currentCategorie > 0 ? `category=${currentCategorie}&` : "";
-      const search = searchValue !== "" ? `&search=${searchValue}` : "";
-
-      const response = await axios.get(
-        `https://66cf3d37901aab24842179de.mockapi.io/Items?page=${
-          currentPage + 1
-        }&limit=4&${category}sortBy=${currentSort}&order=${currentOrder}${search}`
+      const data = await dispatch(
+        fetchPizza({
+          currentCategorie,
+          currentSort,
+          currentOrder,
+          searchValue,
+          currentPage,
+        })
       );
-      if (response.status !== 200) throw new Error();
-
-      setItems(response.data);
-      setIsLoading(false);
+      console.log(data.payload);
+      dispatch(setItems(data.payload));
+      // setItems(response.data);
+      // setIsLoading(false);
       window.scrollTo(0, 0);
     } catch (error) {
       console.log(error);
@@ -59,7 +59,9 @@ const Home: React.FC = () => {
             <Sort />
           </div>
           <h2 className="content__title">Все пиццы</h2>
-          <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+          <div className="content__items">
+            {status === "pending" ? skeletons : pizzas}
+          </div>
           <div className="content__paginate">
             <Paginate />
           </div>

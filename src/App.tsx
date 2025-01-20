@@ -6,6 +6,7 @@ import Cart from "./pages/Cart";
 import { Routes, Route } from "react-router";
 import NotFound from "./pages/NotFound";
 import FullPizza from "./pages/FullPizza";
+// import TestHome from "./pages/TestHome";
 
 const App: React.FC = () => {
   return (

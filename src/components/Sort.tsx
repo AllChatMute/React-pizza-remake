@@ -31,8 +31,8 @@ const Sort: React.FC = () => {
     if (sortName === "price") return "цене";
   };
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setPopupVisible(false);
       }
     };

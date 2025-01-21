@@ -29,10 +29,8 @@ const Home: React.FC = () => {
           currentPage,
         })
       );
-      console.log(data.payload);
       dispatch(setItems(data.payload));
-      // setItems(response.data);
-      // setIsLoading(false);
+
       window.scrollTo(0, 0);
     } catch (error) {
       console.log(error);

@@ -14,8 +14,12 @@ const Order: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.composedPath().includes(orderRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      console.log(event.composedPath());
+      if (
+        orderRef.current &&
+        !event.composedPath().includes(orderRef.current)
+      ) {
         setPopupVisible(false);
       }
     };

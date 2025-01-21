@@ -60,7 +60,6 @@ export const pizzaSlice = createSlice({
       state.status = "success";
     });
     builder.addCase(fetchPizza.pending, (state) => {
-      console.log("идет отправка");
       state.status = "pending";
     });
     builder.addCase(fetchPizza.rejected, (state) => {

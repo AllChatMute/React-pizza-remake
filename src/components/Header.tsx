@@ -3,10 +3,11 @@ import Logo from "../assets/img/pizza-logo.svg";
 import Search from "./Search/Search";
 import { Link, useLocation } from "react-router";
 import { useAppSelector } from "../redux/hooks";
+import { selectCartItems } from "../redux/slices/cartSlice";
 
 const Header: React.FC = () => {
   const location = useLocation();
-  const cartItems = useAppSelector((state) => state.cart.cartItems);
+  const cartItems = useAppSelector(selectCartItems);
   const totalCount = cartItems.reduce((total, item) => total + item.count, 0);
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.count,

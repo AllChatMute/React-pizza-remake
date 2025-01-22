@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import cartPizzaType from "../../types/cartPizzaInterface";
+import { setCartItemsToLS } from "../../utils/setCartItemsToLS";
+import { findPizzaFromCart } from "../../utils/findPizzaFromCart";
 
 interface initialState {
   cartItems: cartPizzaType[];
@@ -14,58 +16,57 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     handleAddCartItem: (state, action: PayloadAction<cartPizzaType>) => {
-      const foundedPizza = state.cartItems.find(
-        (item) => item.id === action.payload.id
-      );
+      const foundedPizza = findPizzaFromCart(state, action);
 
       if (foundedPizza) {
         foundedPizza.count++;
-        localStorage.setItem("cart", JSON.stringify(state.cartItems));
+        setCartItemsToLS(state);
       } else {
         state.cartItems.push(action.payload);
-        localStorage.setItem("cart", JSON.stringify(state.cartItems));
+        setCartItemsToLS(state);
       }
     },
+
     handleDeleteCartItem: (state, action: PayloadAction<string>) => {
-      const foundedPizza = state.cartItems.find(
-        (item) => item.id === action.payload
-      );
+      const foundedPizza = findPizzaFromCart(state, action);
 
       state.cartItems = state.cartItems.filter(
         (item) => item.id !== foundedPizza?.id
       );
 
-      localStorage.setItem("cart", JSON.stringify(state.cartItems));
+      setCartItemsToLS(state);
     },
+
     handleIncreaseItemCount: (state, action: PayloadAction<string>) => {
-      const foundedPizza = state.cartItems.find(
-        (item) => item.id === action.payload
-      );
+      const foundedPizza = findPizzaFromCart(state, action);
       if (foundedPizza) foundedPizza.count++;
-      localStorage.setItem("cart", JSON.stringify(state.cartItems));
+      setCartItemsToLS(state);
     },
+
     handleDecreaseItemCount: (state, action: PayloadAction<string>) => {
-      const foundedPizza = state.cartItems.find(
-        (item) => item.id === action.payload
-      );
+      const foundedPizza = findPizzaFromCart(state, action);
 
       if (foundedPizza && foundedPizza.count > 1) {
         foundedPizza.count--;
-        localStorage.setItem("cart", JSON.stringify(state.cartItems));
+        setCartItemsToLS(state);
       } else if (foundedPizza && foundedPizza.count <= 1) {
         state.cartItems = state.cartItems.filter(
           (item) => item.id !== foundedPizza.id
         );
-        localStorage.setItem("cart", JSON.stringify(state.cartItems));
+        setCartItemsToLS(state);
       }
     },
+
     handleClearCart: (state) => {
-      state.cartItems.forEach((item) => (item.count = 0));
       state.cartItems = [];
       localStorage.setItem("cart", "[]");
     },
   },
 });
+
+export const selectCartItems = (state: {
+  cart: { cartItems: cartPizzaType[] };
+}) => state.cart.cartItems;
 
 export const {
   handleAddCartItem,
@@ -74,5 +75,4 @@ export const {
   handleIncreaseItemCount,
   handleDecreaseItemCount,
 } = cartSlice.actions;
-
 export default cartSlice.reducer;

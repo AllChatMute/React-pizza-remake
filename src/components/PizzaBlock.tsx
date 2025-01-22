@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PizzaBlockType from "../types/PizzaBlockInterface";
 import Rating from "./Rating";
-import { handleAddCartItem } from "../redux/slices/cartSlice";
+import { handleAddCartItem, selectCartItems } from "../redux/slices/cartSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import cartPizzaType from "../types/cartPizzaInterface";
 import { useNavigate } from "react-router";
@@ -24,7 +24,7 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({
   const [pizzaType, setPizzaType] = useState(0);
   const [pizzaSize, setPizzaSize] = useState(sizes[0]);
   const navigate = useNavigate();
-  const count = useAppSelector((state) => state.cart.cartItems).find(
+  const count = useAppSelector(selectCartItems).find(
     (item) => item.id === id
   )?.count;
 

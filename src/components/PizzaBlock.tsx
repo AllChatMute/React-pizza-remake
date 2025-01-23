@@ -20,13 +20,13 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({
   rating,
   id,
 }) => {
-  const dispatch = useAppDispatch();
-  const [pizzaType, setPizzaType] = useState(0);
-  const [pizzaSize, setPizzaSize] = useState(sizes[0]);
-  const navigate = useNavigate();
+  const [pizzaType, setPizzaType] = useState<number>(0);
+  const [pizzaSize, setPizzaSize] = useState<number>(sizes[0]);
   const count = useAppSelector(selectCartItems).find(
     (item) => item.id === id
   )?.count;
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const pizzaToCart: cartPizzaType = {
     id,

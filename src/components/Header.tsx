@@ -4,15 +4,13 @@ import Search from "./Search/Search";
 import { Link, useLocation } from "react-router";
 import { useAppSelector } from "../redux/hooks";
 import { selectCartItems } from "../redux/slices/cartSlice";
+import { calculateTotal } from "../utils/calculateTotal";
 
 const Header: React.FC = () => {
   const location = useLocation();
   const cartItems = useAppSelector(selectCartItems);
-  const totalCount = cartItems.reduce((total, item) => total + item.count, 0);
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.count,
-    0
-  );
+  const { totalCount, totalPrice } = calculateTotal(cartItems);
+
   return (
     <>
       <div className="header">

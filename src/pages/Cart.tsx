@@ -3,16 +3,13 @@ import CartItem from "../components/CartItem";
 import { Link } from "react-router";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { handleClearCart, selectCartItems } from "../redux/slices/cartSlice";
+import { calculateTotal } from "../utils/calculateTotal";
 import EmptyCart from "./EmptyCart";
 
 const Cart: React.FC = () => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
-  const totalCount = cartItems.reduce((total, item) => total + item.count, 0);
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.count,
-    0
-  );
+  const { totalCount, totalPrice } = calculateTotal(cartItems);
 
   return (
     <>

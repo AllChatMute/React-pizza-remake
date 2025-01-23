@@ -15,7 +15,6 @@ const Order: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      console.log(event.composedPath());
       if (
         orderRef.current &&
         !event.composedPath().includes(orderRef.current)

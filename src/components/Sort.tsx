@@ -11,14 +11,9 @@ const sortList: { sortBy: string }[] = [
 
 const Sort: React.FC = () => {
   const currentSort = useAppSelector((state) => state.filter.currentSort);
-  const dispatch = useAppDispatch();
-
   const [popupVisible, setPopupVisible] = useState(false);
   const sortRef = useRef<HTMLDivElement | null>(null);
-
-  const handleChangeVisible = () => {
-    setPopupVisible(!popupVisible);
-  };
+  const dispatch = useAppDispatch();
 
   const handleChangeSortType = (sort: string) => {
     dispatch(setCurrentSort(sort));
@@ -30,6 +25,7 @@ const Sort: React.FC = () => {
     if (sortName === "title") return "алфавиту";
     if (sortName === "price") return "цене";
   };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
@@ -45,7 +41,7 @@ const Sort: React.FC = () => {
 
   return (
     <>
-      <div className="sort" onClick={() => handleChangeVisible()}>
+      <div className="sort" onClick={() => setPopupVisible(!popupVisible)}>
         <div className="sort__label">
           <div ref={sortRef} className="sort__label-sort">
             <svg

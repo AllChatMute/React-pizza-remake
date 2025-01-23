@@ -4,9 +4,10 @@ import search from "./slices/searchSlice";
 import cart from "./slices/cartSlice";
 import paginate from "./slices/paginateSlice";
 import pizza from "./slices/pizzaSlice";
+import fullPizza from "./slices/fullPizzaSlice";
 
 export const store = configureStore({
-  reducer: { filter, search, cart, paginate, pizza },
+  reducer: { filter, search, cart, paginate, pizza, fullPizza },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -17,9 +17,7 @@ const CartItem: React.FC<cartPizzaType> = ({
   id,
 }) => {
   const dispatch = useAppDispatch();
-  let selectedType;
-  if (type === 0) selectedType = "тонкое";
-  if (type === 1) selectedType = "традиционное";
+  const selectedType = type === 0 ? "тонкое" : "традиционное";
 
   return (
     <>

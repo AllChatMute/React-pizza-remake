@@ -5,7 +5,7 @@ import { setValue } from "../../redux/slices/searchSlice";
 import { debounce } from "lodash";
 
 const Search: React.FC = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
   const inputRef = useRef<HTMLInputElement | null>(null);
   const value = useAppSelector((state) => state.search.value);
   const dispatch = useAppDispatch();

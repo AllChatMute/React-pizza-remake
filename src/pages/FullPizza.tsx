@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import axios from "axios";
-import PizzaBlockType from "../types/PizzaBlockInterface";
+import { fetchFullPizza, setFullPizza } from "../redux/slices/fullPizzaSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const FullPizza: React.FC = () => {
+  const { fullPizza, status } = useAppSelector((state) => state.fullPizza);
   const id = useParams().id;
   const navigate = useNavigate();
-  const [pizza, setPizza] = useState<PizzaBlockType | null>(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchPizza = async () => {
       try {
-        const response = await axios.get(
-          `https://66cf3d37901aab24842179de.mockapi.io/Items/${id}`
-        );
-        if (response.status !== 200) throw new Error();
-        setPizza(response.data);
+        const response = await dispatch(fetchFullPizza(id));
+        dispatch(setFullPizza(response.payload));
+        if (status === "reject") throw new Error("Rejected!");
       } catch (error) {
         navigate("/");
         alert("Пицца не найдена!");
@@ -23,7 +22,8 @@ const FullPizza: React.FC = () => {
       }
     };
     fetchPizza();
-  }, [id, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   return (
     <>
       <div className="content">
@@ -32,11 +32,11 @@ const FullPizza: React.FC = () => {
             <div className="fullPizza">
               <img
                 className="fullPizza__image"
-                src={pizza?.imageUrl}
+                src={fullPizza?.imageUrl}
                 alt="Pizza"
               />
-              <h4 className="fullPizza__title">{pizza?.title}</h4>
-              <p className="fullPizza__description">{pizza?.description}</p>
+              <h4 className="fullPizza__title">{fullPizza?.title}</h4>
+              <p className="fullPizza__description">{fullPizza?.description}</p>
             </div>
           </div>
         </div>

@@ -39,10 +39,10 @@ export const fetchPizza = createAsyncThunk(
         }&limit=4&${category}sortBy=${currentSort}&order=${currentOrder}${search}`
       );
       if (response.status !== 200) throw new Error();
-
       return response.data;
     } catch (error) {
       console.log(error);
+      return [];
     }
   }
 );

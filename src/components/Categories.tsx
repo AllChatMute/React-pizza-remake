@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setCurrentCategorie } from "../redux/slices/filterSlice";
 
@@ -11,10 +11,16 @@ const categoriesList: string[] = [
   "Закрытые",
 ];
 
-const Categories: React.FC = () => {
+const Categories: React.FC = React.memo(() => {
   const dispatch = useAppDispatch();
   const currentCategorie = useAppSelector(
     (state) => state.filter.currentCategorie
+  );
+  const onChangeCategory = useCallback(
+    (index: number) => {
+      dispatch(setCurrentCategorie(index));
+    },
+    [dispatch]
   );
 
   return (
@@ -25,7 +31,7 @@ const Categories: React.FC = () => {
             <li
               key={categorie}
               className={currentCategorie === index ? "active" : ""}
-              onClick={() => dispatch(setCurrentCategorie(index))}
+              onClick={() => onChangeCategory(index)}
             >
               {categorie}
             </li>
@@ -34,6 +40,6 @@ const Categories: React.FC = () => {
       </div>
     </>
   );
-};
+});
 
 export default Categories;

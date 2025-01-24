@@ -3,7 +3,6 @@ import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/Skeleton";
-
 import PizzaBlockType from "../types/PizzaBlockInterface";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import Paginate from "../components/Paginate/Paginate";

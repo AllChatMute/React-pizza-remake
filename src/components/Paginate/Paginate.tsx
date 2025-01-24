@@ -2,14 +2,16 @@ import ReactPaginate from "react-paginate";
 import styles from "./Paginate.module.scss";
 import { useAppDispatch } from "../../redux/hooks";
 import { setCurrentPage } from "../../redux/slices/paginateSlice";
-import React from "react";
+import React, { useCallback } from "react";
 
-const Paginate: React.FC = () => {
+const Paginate: React.FC = React.memo(() => {
   const dispatch = useAppDispatch();
-
-  const handlePageClick = (event: { selected: number }) => {
-    dispatch(setCurrentPage(event.selected));
-  };
+  const handlePageClick = useCallback(
+    (event: { selected: number }) => {
+      dispatch(setCurrentPage(event.selected));
+    },
+    [dispatch]
+  );
   return (
     <>
       <ReactPaginate
@@ -24,6 +26,6 @@ const Paginate: React.FC = () => {
       />
     </>
   );
-};
+});
 
 export default Paginate;

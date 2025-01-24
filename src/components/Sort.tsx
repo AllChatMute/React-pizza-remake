@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setCurrentSort } from "../redux/slices/filterSlice";
 import Order from "./Order";
@@ -9,16 +9,19 @@ const sortList: { sortBy: string }[] = [
   { sortBy: "title" },
 ];
 
-const Sort: React.FC = () => {
+const Sort: React.FC = React.memo(() => {
   const currentSort = useAppSelector((state) => state.filter.currentSort);
   const [popupVisible, setPopupVisible] = useState(false);
   const sortRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useAppDispatch();
 
-  const handleChangeSortType = (sort: string) => {
-    dispatch(setCurrentSort(sort));
-    setPopupVisible(!popupVisible);
-  };
+  const handleChangeSortType = useCallback(
+    (sort: string) => {
+      dispatch(setCurrentSort(sort));
+      setPopupVisible(!popupVisible);
+    },
+    [dispatch, popupVisible]
+  );
 
   const russifySort = (sortName: string) => {
     if (sortName === "rating") return "популярности";
@@ -78,6 +81,6 @@ const Sort: React.FC = () => {
       </div>
     </>
   );
-};
+});
 
 export default Sort;

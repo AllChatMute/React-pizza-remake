@@ -24,8 +24,10 @@ const Header: React.FC = () => {
               </div>
             </div>
           </Link>
-          <Search />
-          <HeaderCartBadge totalCount={totalCount} totalPrice={totalPrice} />
+          <div className="header__search-wrapper">
+            <Search />
+            <HeaderCartBadge totalCount={totalCount} totalPrice={totalPrice} />
+          </div>
         </div>
       </div>
     </>
